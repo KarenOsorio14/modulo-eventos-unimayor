@@ -1,0 +1,21 @@
+// Configuración de Cloudflare Workers para el Módulo de Gestión de Eventos
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "modulo-eventos-unimayor",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "../Modulo_Eventos/public",
+    "binding": "ASSETS",
+    "html_handling": "none"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "modulo-eventos-db",
+      "database_id": "c0b16a8f-b4b4-4346-8f38-ad88cecc43f5",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "observability": { "enabled": true }
+}

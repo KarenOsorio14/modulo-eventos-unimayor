@@ -1,5 +1,7 @@
 # Módulo de Gestión de Eventos – Unimayor
 
+**Demo en línea:** https://modulo-eventos-unimayor.kd1.workers.dev
+
 Prototipo de módulo web de eventos deportivos y culturales de la Institución Universitaria Colegio Mayor del Cauca. Proyecto del equipo **FunAcorn** para Gestión de Proyectos Informáticos.
 
 Permite consultar el catálogo de eventos sin iniciar sesión, filtrar por categoría y fecha, inscribirse con control de cupos y administrar los eventos.
@@ -45,6 +47,31 @@ Todos usan la contraseña `Prueba123`.
 | Estudiante | est@prueba.edu.co |
 | Docente | doc@prueba.edu.co |
 | Administrador | admin@prueba.edu.co |
+
+## Versión en línea (Cloudflare)
+
+La carpeta `cloudflare/` tiene la misma API adaptada a **Cloudflare Workers** con la base de datos **D1** (también SQLite). Usa las mismas páginas de `Modulo_Eventos/public`.
+
+Diferencias con la versión Node:
+- **Contraseñas:** PBKDF2-SHA256 con la Web Crypto API en lugar de bcrypt (Workers no corre módulos nativos).
+- **Sin sobrecupos:** D1 no tiene transacciones interactivas, así que la verificación del cupo y el registro se hacen en una sola sentencia `INSERT … SELECT`, que es atómica. Probado con 20 inscripciones simultáneas a un evento de 1 cupo: solo una se acepta.
+- **Hora:** se usa la hora de Colombia (UTC-5).
+
+### Desplegar
+
+Requisitos: una cuenta gratuita en [Cloudflare](https://dash.cloudflare.com/sign-up).
+
+```bash
+cd cloudflare
+npm install
+npx wrangler login                        # abre el navegador para autorizar
+npx wrangler d1 create modulo-eventos-db  # copia el database_id en wrangler.jsonc
+npm run db:remota                         # crea las tablas y los datos de prueba
+npm run deploy                            # publica y muestra la dirección .workers.dev
+npx wrangler secret put JWT_SECRET        # escribe una clave larga y secreta
+```
+
+Para probarlo en tu computador: copia `.dev.vars.example` como `.dev.vars`, corre `npm run db:local` y después `npm run dev`.
 
 ## Páginas
 

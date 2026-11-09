@@ -1,0 +1,2 @@
+# Copia este archivo como .dev.vars para probar en tu computador con "npm run dev"
+JWT_SECRET=clave-solo-para-pruebas-locales

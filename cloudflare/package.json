@@ -1,0 +1,15 @@
+{
+  "name": "modulo-eventos-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Módulo de Gestión de Eventos de Unimayor desplegado en Cloudflare Workers + D1",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 migrations apply modulo-eventos-db --local",
+    "db:remota": "wrangler d1 migrations apply modulo-eventos-db --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}
