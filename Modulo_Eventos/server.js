@@ -1,4 +1,8 @@
 require('dotenv').config();
+if (!process.env.JWT_SECRET) {
+  console.error('Falta JWT_SECRET. Copia .env.example como .env y define una clave.');
+  process.exit(1);
+}
 const express = require('express');
 const path = require('path');
 require('./db'); // inicializa la base

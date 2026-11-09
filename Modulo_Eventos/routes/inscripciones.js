@@ -13,8 +13,10 @@ const inscribir = db.transaction((usuarioId, eventoId) => {
     return { ok: false, codigo: 409, mensaje: 'Cupo agotado.' };
   try {
     db.prepare('INSERT INTO inscripciones (usuario_id,evento_id) VALUES (?,?)').run(usuarioId, eventoId);
-  } catch {
-    return { ok: false, codigo: 409, mensaje: 'Ya estás inscrito.' };
+  } catch (err) {
+    if (err.code === 'SQLITE_CONSTRAINT_UNIQUE')
+      return { ok: false, codigo: 409, mensaje: 'Ya estás inscrito en este evento.' };
+    throw err;
   }
   return { ok: true, cupos: ev.cupo_maximo - n - 1 };
 });
@@ -35,9 +37,11 @@ router.delete('/eventos/:id/inscripcion', verificarSesion, roles, (req, res) => 
 });
 
 router.get('/mis-inscripciones', verificarSesion, roles, (req, res) => {
-  res.json(db.prepare(`SELECT e.id,e.nombre,e.categoria,e.fecha_hora,e.lugar,i.fecha_inscripcion
+  // Incluye el estado del evento: si fue dado de baja, el frontend lo muestra como cancelado.
+  res.json(db.prepare(`SELECT e.id,e.nombre,e.categoria,e.fecha_hora,e.lugar,e.estado AS estado_evento,
+      e.fecha_hora < strftime('%Y-%m-%dT%H:%M','now','localtime') AS pasado, i.fecha_inscripcion
     FROM inscripciones i JOIN eventos e ON e.id=i.evento_id
     WHERE i.usuario_id=? AND i.estado='activa' ORDER BY e.fecha_hora`).all(req.usuario.id));
 });
 
-module.exports = router;
+module.exports = router;

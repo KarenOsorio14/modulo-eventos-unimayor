@@ -1,3 +1,0 @@
-Token login Modulo eventos
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sIjoiZXN0dWRpYW50ZSIsImlhdCI6MTc5MTc2NTA1OSwiZXhwIjoxNzkxNzkzODU5fQ.Oyb_-7g4I9Cr1fcZW29YPlJfaB6H_0yFaad4i0ECpVM
