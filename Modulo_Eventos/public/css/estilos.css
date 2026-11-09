@@ -148,8 +148,8 @@ select, .campo input, .campo textarea, .campo select { border: 1px solid var(--b
 
 /* ---------- Estados vacíos y avisos ---------- */
 .vacio { background: #fff; border: 1px solid var(--linea); border-radius: 14px; padding: 48px 24px; text-align: center; }
-.vacio .icono { width: 44px; height: 44px; margin: 0 auto 12px; background: var(--azul); border-radius: 6px; display: grid; place-items: center; }
-.vacio .icono img { width: 26px; filter: brightness(0) invert(1); }
+.vacio .icono { width: 44px; margin: 0 auto 12px; }
+.vacio .icono img { width: 44px; display: block; }
 .vacio h2 { color: var(--azul); font-size: 18px; margin: 0 0 4px; }
 .vacio p { color: var(--suave); margin: 0 0 16px; }
 .aviso { border-radius: 10px; padding: 12px 16px; font-weight: 700; font-size: 14px; margin-bottom: 18px; display: flex; gap: 8px; align-items: flex-start; }
