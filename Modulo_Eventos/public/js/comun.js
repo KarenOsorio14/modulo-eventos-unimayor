@@ -139,12 +139,18 @@ function afiche(ev, { grande = false } = {}) {
     el(grande ? 'p' : 'p', { class: 'nombre' }, ev.nombre),
     ev.organizador ? el('div', { class: 'sub' }, ev.organizador) : null,
   );
-  if (ev.imagen_url && /^(https?:)?\/\//.test(ev.imagen_url) || /^\/img\//.test(ev.imagen_url || '')) {
+  if (ev.imagen_url && /^(https:\/\/|\/img\/)/.test(ev.imagen_url)) {
+    // Si la foto no carga, queda de respaldo el degradado de la categoría
     nodo.classList.add('con-imagen');
-    nodo.style.backgroundImage = `url("${encodeURI(ev.imagen_url)}")`;
+    nodo.style.backgroundImage = `url("${encodeURI(ev.imagen_url)}"), ${DEGRADADOS[ev.categoria] || DEGRADADOS.deportivo}`;
   }
   return nodo;
 }
+
+const DEGRADADOS = {
+  deportivo: 'linear-gradient(135deg, #0b2a5c 0%, #0b5cab 100%)',
+  cultural: 'linear-gradient(135deg, #4a1450 0%, #a51c5b 55%, #f5a700 100%)',
+};
 
 // Pastilla de cupos: verde, últimos cupos (≤ 5) o agotado
 function pastillaCupos(ev) {
